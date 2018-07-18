@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  # web:
+  #   build: docker/web
+  #   volumes:
+  #     - .:/code
+  #   ports:
+  #     - "5000:5000"
+  #   command: flask run --host 0.0.0.0 --port 5000
+  db:
+    image: postgres:10
+    volumes:
+      - flask_auth_data:/var/lib/postgresql
+      - ./docker/db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    env_file: env.dev
+
+volumes:
+  flask_auth_data:
